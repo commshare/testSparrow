@@ -28,6 +28,8 @@ int cirbuf_init(cirbuf_t **buf,int max){
 }
 /*如果是基本数据，拷贝的是数据的值，如果是指针，拷贝的是实参的值（值是一个地址）。*/
 void cirbuf_unint(cirbuf_t *buf){
+    free(buf->data);
+	buf->data=buf->rptr=buf->wptr=NULL;
     /*释放这个地址指向的内存*/
     free(buf);
 	/*这改变的是形参吧，没其他作用*/
@@ -100,19 +102,23 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 		#else
         rest=(buf->size)-(buf->wptr-buf->rptr);
 		#endif
+		LOGD("*(buf->wptr-1)[%c]",*(buf->wptr-1));
+		int j=0;
+		#if 0
+		for(j=0;j<buf->size;j++){
+			printf("####  *buf->data[%d][%c]\n",j,*(buf->data[j]));
+		}
+		#else
+		  LOGD("-1-$$$$buf->data[%s]",buf->data);
+		#endif
 		capability=MIN(rest,put_size);
 		int I=(buf->data+buf->size) - buf->wptr;
 		int II=0;
 		LOGD("rest[%d] capablity[%d] I[%d]",rest,capability,I);
-		memcpy(buf->wptr,(uint8_t *)input,I);
-		if((capability-I)>0) /*I不够用*/
-		{
-			LOGD("put II [%d]",II);
-			II=capability-I;
-			memcpy(buf->data,input-I,II);
-			buf->wptr=buf->data+II;
-		}
-		else /*I够用*/
+		int check=capability-I;
+		/*因为插入要依赖于wptr，所以判断和插入是有先后顺序的，先插入I，移动wptr，
+		此时，I不够用，使用移动后的wptr插入II，再次移动wptr，准备下次插入*/
+		if(check==0 || check<0)/*I够用*/
 		{
 			LOGD("put capacity[%d] to I [%d] *(buf->wptr)[%c] ",capability,I,*(buf->wptr) );
 			memcpy(buf->wptr,input,capability);
@@ -122,23 +128,33 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 				LOGD("W at the end,from the begin 2");
 			    buf->wptr=buf->data;/*从0开始来了*/
 		    }
+		}else
+		/*I不够用*/
+		{
+			LOGD("put II [%d]",II);
+			II=capability-I;
+			memcpy(buf->data,input-I,II);
+			buf->wptr=buf->data+II;
 		}
 		return capability;//(I+II);
 	}
 }
 
 void main(){
+	int i;
 	cirbuf_t *buf;
     cirbuf_init(&buf,10);
 	uint8_t *array="1234567890";
+	#if 0
 	/*写入1到0，共10个*/
 	cirbuf_put(buf,array,10);
 	/*uint8_t 居然只占了一个字节，和char一样*/
 	LOGD("sizeof(int)[%d] sizeof(uint8_t)[%d] sizeof(char)[%d]",sizeof(int),sizeof(uint8_t),sizeof(char));
 	LOGD("----1---AFTER PUT");
-	int i;
+
 	for(i=0;i<10;i++)
 		printf("buf->data[%c] \n",*(buf->data+i));
+	#endif
 	uint8_t *array2="abcdefghik";
 	/*此时，应该用array2全部覆盖了当前缓冲，即输出a到k*/
 	cirbuf_put(buf,array2,10);
@@ -152,22 +168,25 @@ void main(){
 	for(i=0;i<10;i++)
 		printf("buf->data[%c] \n",*(buf->data+i));
 
+
 	/*再写入4个字母，应该是1234abcdik*/
 	cirbuf_put(buf,array2,4);
 	LOGD("----4---AFTER PUT");
 	for(i=0;i<10;i++)
 		printf("buf->data[%c] \n",*(buf->data+i));
-
+#if 0
+    /*空间不足，写入两个数字12，1234abcd12*/
 	cirbuf_put(buf,array,7);
 	LOGD("----5---AFTER PUT");
 	for(i=0;i<10;i++)
 		printf("buf->data[%c] \n",*(buf->data+i));
 
-
+    /*abcdefgd12*/
 	cirbuf_put(buf,array2,7);
 	LOGD("----6---AFTER PUT");
 	for(i=0;i<10;i++)
 		printf("buf->data[%c] \n",*(buf->data+i));
+#endif
 	cirbuf_unint(buf);
 
 }
