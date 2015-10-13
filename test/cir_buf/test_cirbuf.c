@@ -145,7 +145,7 @@ void main(){
 	cirbuf_t *buf;
     cirbuf_init(&buf,10);
 	uint8_t *array="1234567890";
-	#if 0
+	#if 1
 	/*写入1到0，共10个*/
 	cirbuf_put(buf,array,10);
 	/*uint8_t 居然只占了一个字节，和char一样*/
@@ -174,7 +174,7 @@ void main(){
 	LOGD("----4---AFTER PUT");
 	for(i=0;i<10;i++)
 		printf("buf->data[%c] \n",*(buf->data+i));
-#if 0
+#if 1
     /*空间不足，写入两个数字12，1234abcd12*/
 	cirbuf_put(buf,array,7);
 	LOGD("----5---AFTER PUT");
@@ -186,7 +186,13 @@ void main(){
 	LOGD("----6---AFTER PUT");
 	for(i=0;i<10;i++)
 		printf("buf->data[%c] \n",*(buf->data+i));
+
+	/*abcdefg123*/
+	cirbuf_put(buf,"#",1);
+	LOGD("----7---AFTER PUT");
+	printf("buf->data[%s] \n",(buf->data));
 #endif
+
 	cirbuf_unint(buf);
 
 }
