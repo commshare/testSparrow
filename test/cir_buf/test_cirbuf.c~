@@ -1,0 +1,88 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include <string.h>
+
+
+#include"test_cirbuf.h"
+#include"sc_log.h"
+
+
+#define MIN(X,Y) ((X)>(Y)?(Y):(X))
+
+/*希望用户传递的是一个地址*/
+int cirbuf_init(cirbuf_t **buf,int max){
+     /*改变地址指向的内容的值*/
+     *buf=(cirbuf_t *)malloc(sizeof(cirbuf_t));
+	 if(*buf==NULL)
+	 {
+	 	LOGD("malloc fail");
+		return -1;
+	 }
+	 memset(*buf,0,sizeof(cirbuf_t));
+	 (*buf)->size=max;
+     (*buf)->data=(uint8_t*)malloc(max);
+	 return 0;
+
+}
+/*如果是基本数据，拷贝的是数据的值，如果是指针，拷贝的是实参的值（值是一个地址）。*/
+void cirbuf_unint(cirbuf_t *buf){
+    /*释放这个地址指向的内存*/
+    free(buf);
+	/*这改变的是形参吧，没其他作用*/
+   //    buf=NULL;
+}
+
+int cirbuf_empty(cirbuf_t *buf)
+{
+	if((buf->data==buf->rptr && buf->data==buf->wptr))
+	{
+		LOGD("cirbuf is empty 1");
+		return 1;
+	}
+	if(buf->rptr+1 == buf->wptr)
+	{
+		LOGD("cirbuf is empty 2");
+		return 1;
+	}
+	return 0;
+}
+int cirbuf_full(cirbuf_t *buf){
+	if(buf->wptr + 1 == buf->rptr){
+		LOGD("cirbuf is full");
+		return 1;
+	}
+	return 0;
+
+}
+int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
+	if(cirbuf_full(buf)){
+		LOGD("full cirbuf ,put fail");
+		return -1;
+	}
+	int rest=-1;
+	int capability=-1;
+    if(buf->wptr > buf->rptr){
+		int I=buf->size - buf->wptr;
+		int II=0;
+        return (I+II);
+	}
+	if(buf->wptr < buf->rptr){
+		//int III=buf->rptr-buf->wptr;
+		rest=buf->rptr-buf->wptr-1;
+		capability=MIN(rest,put_size);
+		memcpy(buf->wptr,(uint8_t*)input,capability);
+		return capability;
+	}
+}
+
+void main(){
+	cirbuf_t *buf;
+    cirbuf_init(&buf,10);
+	uint8_t *array="1234567890";
+	cirbuf_put(buf,array,10);
+	int i;
+	for(i=0;i<10;i++)
+		printf("buf->data[%d]",*(buf->data+i));
+	cirbuf_unint(buf);
+
+}
