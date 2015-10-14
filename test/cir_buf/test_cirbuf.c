@@ -50,6 +50,7 @@ int cirbuf_empty(cirbuf_t *buf)
 	}
 	return 0;
 }
+/*ÊÇ²»ÊÇÑ­»·»º³å²»´æÔÚÂúµÄÇé¿ö£¬¿ÉÒÔÖ±½Ó¸²¸ÇµÄå*/
 int cirbuf_full(cirbuf_t *buf){
 	if(buf->wptr + 1 == buf->rptr){
 		LOGD("cirbuf is full");
@@ -118,16 +119,21 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 		int check=capability-I;
 		/*ÒòÎª²åÈëÒªÒÀÀµÓÚwptr£¬ËùÒÔÅÐ¶ÏºÍ²åÈëÊÇÓÐÏÈºóË³ÐòµÄ£¬ÏÈ²åÈëI£¬ÒÆ¶¯wptr£¬
 		´ËÊ±£¬I²»¹»ÓÃ£¬Ê¹ÓÃÒÆ¶¯ºóµÄwptr²åÈëII£¬ÔÙ´ÎÒÆ¶¯wptr£¬×¼±¸ÏÂ´Î²åÈë*/
+		LOGD("put capacity[%d] to I [%d] *(buf->wptr)[%c] ",capability,I,*(buf->wptr) );
+		memcpy(buf->wptr,input,capability);
+		buf->wptr+=capability;
+		LOGD("buf->wptr[%c] buf->wptr+1 [%c]",*buf->wptr,*(buf->wptr+1));
+		//if(buf->wptr== (buf->data+buf->size)){/*±íÊ¾ÒÑ¾­Ð´Âú*/
+		//	LOGD("W at the end,from the begin 2");
+		//   buf->wptr=buf->data;/*´Ó0¿ªÊ¼À´ÁË*/
+		//}
 		if(check==0 || check<0)/*I¹»ÓÃ*/
 		{
-			LOGD("put capacity[%d] to I [%d] *(buf->wptr)[%c] ",capability,I,*(buf->wptr) );
-			memcpy(buf->wptr,input,capability);
-			buf->wptr+=capability;
-			LOGD("buf->wptr[%c] buf->wptr+1 [%c]",*buf->wptr,*(buf->wptr+1));
-			if(buf->wptr== (buf->data+buf->size)){/*±íÊ¾ÒÑ¾­Ð´Âú*/
-				LOGD("W at the end,from the begin 2");
-			    buf->wptr=buf->data;/*´Ó0¿ªÊ¼À´ÁË*/
-		    }
+           LOGD("only I is enough");
+		   if(check==0)
+		   	 buf->wptr=buf->data;
+		   goto OK;
+
 		}else
 		/*I²»¹»ÓÃ*/
 		{
@@ -136,8 +142,49 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 			memcpy(buf->data,input-I,II);
 			buf->wptr=buf->data+II;
 		}
+OK:
 		return capability;//(I+II);
 	}
+}
+
+int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
+  if(cirbuf_empty(buf)==1)
+  {
+  	  LOGD("cirbuf is empty,could not get");
+	  return -1;
+  }
+  int availability=-1;
+  int stored=-1;
+  if(buf->wptr > buf->rptr){
+	stored=buf->wptr-buf->rptr;
+	availability=MIN(stored,get_size);
+	memcpy(output,buf->rptr,availability);
+	buf->rptr+=availability;
+	if(buf->rptr == buf->data+buf->size){
+		LOGD("read to end ,from the begin");
+		buf->rptr=buf->data;
+	}
+	return availability;
+  }
+  if(buf->wptr < buf->rptr){
+  	stored=(buf->data+buf->size-buf->rptr) + (buf->wptr-buf->data);
+	availability=MIN(stored,get_size);
+    int IV=buf->data+buf->size - buf->rptr;
+	int check=IV-availability;
+	if(check>0 || check==0){
+       memcpy(output,buf->rptr,availability);
+	   buf->rptr+=availability;
+	   if(check=0){
+	   		LOGD("rtpr move to beginning");
+			buf->rptr=buf->data;
+	   }
+	}else /*IV²»¹»*/
+	{
+		/*ÒÑ¾­Ð´ÈëÁËIV´óÐ¡*/
+		//memcpy(output+IV,buf->);
+	}
+
+  }
 }
 
 void main(){
