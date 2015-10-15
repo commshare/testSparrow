@@ -9,6 +9,18 @@
 
 #define MIN(X,Y) ((X)>(Y)?(Y):(X))
 
+
+/*
+data      r      w    data+size
+-----------------------
+     II             I
+
+data      w      r     data+size
+-----------------------
+     V       III    IV
+*/
+
+
 /*希望用户传递的是一个地址*/
 int cirbuf_init(cirbuf_t **buf,int max){
      /*改变地址指向的内容的值*/
