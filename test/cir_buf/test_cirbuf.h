@@ -14,7 +14,9 @@
 */
 #include<stdint.h>
 typedef struct sc_cir_buf_s{
+//    int last_put;/*记录上一次写入的数据量*/
 	//int rest;//剩余空间
+	int level;/*当前保有数据量*/
 	uint8_t *wptr;
 	uint8_t *rptr;
 	uint8_t *data;

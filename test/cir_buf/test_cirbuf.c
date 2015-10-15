@@ -18,6 +18,7 @@ int cirbuf_init(cirbuf_t **buf,int max){
 	 	LOGD("malloc fail");
 		return -1;
 	 }
+	 (*buf)->level=0;
 	 memset(*buf,0,sizeof(cirbuf_t));
 	 (*buf)->size=max;
      (*buf)->data=(uint8_t*)malloc(max*sizeof(uint8_t));
@@ -38,7 +39,8 @@ void cirbuf_unint(cirbuf_t *buf){
 
 int cirbuf_empty(cirbuf_t *buf)
 {
-	if((buf->data==buf->rptr && buf->data==buf->wptr))
+	#if 0
+	if((buf->data==buf->rptr) && (buf->data==buf->wptr))
 	{
 		LOGD("cirbuf is empty 1");
 		return 1;
@@ -48,6 +50,11 @@ int cirbuf_empty(cirbuf_t *buf)
 		LOGD("cirbuf is empty 2");
 		return 1;
 	}
+	#endif
+	LOGD("buf->level [%d]",buf->level);
+	if(buf->level==0)
+		return 1;
+//	return buf->level;
 	return 0;
 }
 /*ÊÇ²»ÊÇÑ­»·»º³å²»´æÔÚÂúµÄÇé¿ö£¬¿ÉÒÔÖ±½Ó¸²¸ÇµÄå*/
@@ -78,6 +85,7 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 			LOGD("W at the end,from the begin 1");
 			buf->wptr=buf->data;/*´Ó0¿ªÊ¼À´ÁË*/
 		}
+		buf->level+=capability;
 		return capability;
 	}
 
@@ -89,6 +97,7 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 		capability=MIN(rest,put_size);
 		memcpy(buf->wptr,(uint8_t*)input,capability);
 		buf->wptr+=capability;
+		buf->level+=capability;
 		return capability;
 	}
 
@@ -143,6 +152,7 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 			buf->wptr=buf->data+II;
 		}
 OK:
+	   buf->level+=capability;
 		return capability;//(I+II);
 	}
 }
@@ -155,7 +165,19 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
   }
   int availability=-1;
   int stored=-1;
+//  LOGD("do get");
+  if(buf->wptr == buf->rptr){/*²»Ò»¶¨ÊÇ¶¼µÈÓÚdata*/
+	//if(buf->level == buf->size)
+	//	LOGD("w == r should be full !");
+	stored=buf->level;
+	availability=MIN(stored,get_size);
+	memcpy(output,buf->rptr,availability);
+	buf->rptr+=availability;
+	buf->level-=availability;
+	return availability;
+  }
   if(buf->wptr > buf->rptr){
+  	LOGD("W>R");
 	stored=buf->wptr-buf->rptr;
 	availability=MIN(stored,get_size);
 	memcpy(output,buf->rptr,availability);
@@ -164,35 +186,43 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
 		LOGD("read to end ,from the begin");
 		buf->rptr=buf->data;
 	}
+	buf->level-=availability;
 	return availability;
   }
   if(buf->wptr < buf->rptr){
+  	LOGD("W < R");
   	stored=(buf->data+buf->size-buf->rptr) + (buf->wptr-buf->data);
 	availability=MIN(stored,get_size);
     int IV=buf->data+buf->size - buf->rptr;
 	int check=IV-availability;
+	memcpy(output,buf->rptr,availability);
+	buf->rptr+=availability;
 	if(check>0 || check==0){
-       memcpy(output,buf->rptr,availability);
-	   buf->rptr+=availability;
+      LOGD("just output IV");
 	   if(check=0){
 	   		LOGD("rtpr move to beginning");
 			buf->rptr=buf->data;
 	   }
 	}else /*IV²»¹»*/
 	{
+		LOGD("output from V");
 		/*ÒÑ¾­Ð´ÈëÁËIV´óÐ¡*/
-		//memcpy(output+IV,buf->);
+		memcpy(output+IV,buf->data,(availability-IV));
 	}
-
+	buf->level-=availability;
+	return availability;
   }
 }
 
-void main(){
+#define TEST_PUT 0
+#define TEST_OUT 1
+
+int main(){
 	int i;
 	cirbuf_t *buf;
     cirbuf_init(&buf,10);
 	uint8_t *array="1234567890";
-	#if 1
+
 	/*Ð´Èë1µ½0£¬¹²10¸ö*/
 	cirbuf_put(buf,array,10);
 	/*uint8_t ¾ÓÈ»Ö»Õ¼ÁËÒ»¸ö×Ö½Ú£¬ºÍcharÒ»Ñù*/
@@ -201,7 +231,7 @@ void main(){
 
 	for(i=0;i<10;i++)
 		printf("buf->data[%c] \n",*(buf->data+i));
-	#endif
+#if TEST_PUT
 	uint8_t *array2="abcdefghik";
 	/*´ËÊ±£¬Ó¦¸ÃÓÃarray2È«²¿¸²¸ÇÁËµ±Ç°»º³å£¬¼´Êä³öaµ½k*/
 	cirbuf_put(buf,array2,10);
@@ -221,7 +251,7 @@ void main(){
 	LOGD("----4---AFTER PUT");
 	for(i=0;i<10;i++)
 		printf("buf->data[%c] \n",*(buf->data+i));
-#if 1
+
     /*¿Õ¼ä²»×ã£¬Ð´ÈëÁ½¸öÊý×Ö12£¬1234abcd12*/
 	cirbuf_put(buf,array,7);
 	LOGD("----5---AFTER PUT");
@@ -240,6 +270,24 @@ void main(){
 	printf("buf->data[%s] \n",(buf->data));
 #endif
 
-	cirbuf_unint(buf);
+#if TEST_OUT
+    uint8_t * out=malloc(10*sizeof(uint8_t));
+    if(out==NULL){
+		LOGD("malloc fail");
+		return -1;
+	}
+    memset(out,0,10*sizeof(uint8_t));
+    cirbuf_get(buf, out, 4);
+	LOGD("out[%s]",out);
+	cirbuf_get(buf, out, 4);
+	LOGD("out[%s]",out);
+	cirbuf_get(buf, out, 2);
+	LOGD("out[%s]",out);
+	cirbuf_get(buf, out, 4);
+	LOGD("out[%s]",out);
+	free(out);
+#endif
 
+	cirbuf_unint(buf);
+    return 0;
 }
