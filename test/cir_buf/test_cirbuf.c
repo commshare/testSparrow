@@ -11,6 +11,8 @@
 
 
 /*
+在put中，I II III 是可以put的位置。
+
 data      r      w    data+size
 -----------------------
      II             I
@@ -105,8 +107,12 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 			LOGD("W at the end,from the begin 1");
 			buf->wptr=buf->data;/*从0开始来了*/
 		}
+		#if 0
 		buf->level+=capability;
 		return capability;
+		#else
+		goto OK;
+		#endif
 	}
 
 	if(buf->wptr < buf->rptr){
@@ -117,8 +123,12 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 		capability=MIN(rest,put_size);
 		memcpy(buf->wptr,(uint8_t*)input,capability);
 		buf->wptr+=capability;
+		#if 0
 		buf->level+=capability;
 		return capability;
+		#else
+		goto OK;
+		#endif
 	}
 
     if(buf->wptr > buf->rptr){
@@ -187,23 +197,15 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
   int stored=-1;
   LOGD("do get[%d]",get_size);
   if(buf->wptr == buf->rptr){/*不一定是都等于data*/
-	//if(buf->level == buf->size)
-	//	LOGD("w == r should be full !");
 	LOGD("W==R");
 	stored=buf->level;
-	availability=MIN(stored,get_size);
-	memcpy(output,buf->rptr,availability);
-	buf->rptr+=availability;
-	buf->level-=availability;
-	if(buf->rptr == (buf->data+buf->size)){
-		LOGD("read to end ,from the begin 1 ");
-		buf->rptr=buf->data;
-	}
-	return availability;
+
+	goto OKOK;
   }
   if(buf->wptr > buf->rptr){
   	LOGD("W>R");
 	stored=buf->wptr-buf->rptr;
+	#if 0
 	availability=MIN(stored,get_size);
 	memcpy(output,buf->rptr,availability);
 	buf->rptr+=availability;
@@ -213,10 +215,18 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
 	}
 	buf->level-=availability;
 	return availability;
+	#else
+	goto OKOK;
+	#endif
   }
   if(buf->wptr < buf->rptr){
   	LOGD("W < R");
-  	stored=(buf->data+buf->size-buf->rptr) + (buf->wptr-buf->data);
+  	stored
+	#if 0
+	=(buf->data+buf->size-buf->rptr) + (buf->wptr-buf->data)
+	#else
+		  =buf->size-(buf->rptr-buf->wptr);
+	#endif
 	availability=MIN(stored,get_size);
     int IV=buf->data+buf->size - buf->rptr;
 	int check=IV-availability;
@@ -234,13 +244,28 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
 		/*已经写入了IV大小*/
 		memcpy(output+IV,buf->data,(availability-IV));
 	}
+	#if 0
 	buf->level-=availability;
 	if(buf->rptr == (buf->data+buf->size)){
 		LOGD("read to end ,from the begin 3");
 		buf->rptr=buf->data;
 	}
 	return availability;
+	#else
+	goto OK;
+	#endif
   }
+OKOK:
+	availability=MIN(stored,get_size);
+	memcpy(output,buf->rptr,availability);
+	buf->rptr+=availability;
+ OK:
+	buf->level-=availability;
+	if(buf->rptr == (buf->data+buf->size)){
+		LOGD("read to end ,from the begin  ");
+		buf->rptr=buf->data;
+	}
+	return availability;
 }
 
 #define TEST_PUT 0
