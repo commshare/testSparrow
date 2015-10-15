@@ -53,18 +53,6 @@ void cirbuf_unint(cirbuf_t *buf){
 
 int cirbuf_empty(cirbuf_t *buf)
 {
-	#if 0
-	if((buf->data==buf->rptr) && (buf->data==buf->wptr))
-	{
-		LOGD("cirbuf is empty 1");
-		return 1;
-	}
-	if(buf->rptr+1 == buf->wptr)
-	{
-		LOGD("cirbuf is empty 2");
-		return 1;
-	}
-	#endif
 	LOGD("buf->level [%d]",buf->level);
 	if(buf->level==0)
 		return 1;
@@ -73,13 +61,7 @@ int cirbuf_empty(cirbuf_t *buf)
 }
 /*ÊÇ²»ÊÇÑ­»·»º³å²»´æÔÚÂúµÄÇé¿ö£¬¿ÉÒÔÖ±½Ó¸²¸ÇµÄå*/
 int cirbuf_full(cirbuf_t *buf){
-#if 0
-	if(buf->wptr + 1 == buf->rptr){
-		LOGD("cirbuf is full");
-		return 1;
-	}
-	return 0;
-	#endif
+
 	if(buf->level==buf->size)
 	{
 		LOGD("buff is full ");
@@ -96,6 +78,16 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 	}
 	int rest=-1;
 	int capability=-1;
+	if(buf->wptr < buf->rptr){
+		LOGD("W<R");
+		//int III=buf->rptr-buf->wptr;
+		/*rÎªdata+7,wÎªdata+4,±íÊ¾4 5  6 ¿ÉÐ´Èë£¬´Ó7¿É¶ÁÈ¡*/
+		rest=buf->rptr-buf->wptr;//-1;
+		capability=MIN(rest,put_size);
+		memcpy(buf->wptr,(uint8_t*)input,capability);
+		buf->wptr+=capability;
+		goto OK;
+	}
 	if(buf->data==buf->wptr && buf->data==buf->rptr){
 		LOGD("buf->data == W == R ");
 		rest=buf->size;
@@ -107,28 +99,7 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 			LOGD("W at the end,from the begin 1");
 			buf->wptr=buf->data;/*´Ó0¿ªÊ¼À´ÁË*/
 		}
-		#if 0
-		buf->level+=capability;
-		return capability;
-		#else
 		goto OK;
-		#endif
-	}
-
-	if(buf->wptr < buf->rptr){
-		LOGD("W<R");
-		//int III=buf->rptr-buf->wptr;
-		/*rÎªdata+7,wÎªdata+4,±íÊ¾4 5  6 ¿ÉÐ´Èë£¬´Ó7¿É¶ÁÈ¡*/
-		rest=buf->rptr-buf->wptr;//-1;
-		capability=MIN(rest,put_size);
-		memcpy(buf->wptr,(uint8_t*)input,capability);
-		buf->wptr+=capability;
-		#if 0
-		buf->level+=capability;
-		return capability;
-		#else
-		goto OK;
-		#endif
 	}
 
     if(buf->wptr > buf->rptr){
@@ -143,14 +114,6 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
         rest=(buf->size)-(buf->wptr-buf->rptr);
 		#endif
 		LOGD("*(buf->wptr-1)[%c]",*(buf->wptr-1));
-		int j=0;
-		#if 0
-		for(j=0;j<buf->size;j++){
-			printf("####  *buf->data[%d][%c]\n",j,*(buf->data[j]));
-		}
-		#else
-		  LOGD("-1-$$$$buf->data[%s]",buf->data);
-		#endif
 		capability=MIN(rest,put_size);
 		int I=(buf->data+buf->size) - buf->wptr;
 		int II=0;
@@ -162,10 +125,7 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 		memcpy(buf->wptr,input,capability);
 		buf->wptr+=capability;
 		LOGD("buf->wptr[%c] buf->wptr+1 [%c]",*buf->wptr,*(buf->wptr+1));
-		//if(buf->wptr== (buf->data+buf->size)){/*±íÊ¾ÒÑ¾­Ð´Âú*/
-		//	LOGD("W at the end,from the begin 2");
-		//   buf->wptr=buf->data;/*´Ó0¿ªÊ¼À´ÁË*/
-		//}
+
 		if(check==0 || check<0)/*I¹»ÓÃ*/
 		{
            LOGD("only I is enough");
@@ -199,25 +159,12 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
   if(buf->wptr == buf->rptr){/*²»Ò»¶¨ÊÇ¶¼µÈÓÚdata*/
 	LOGD("W==R");
 	stored=buf->level;
-
 	goto OKOK;
   }
   if(buf->wptr > buf->rptr){
   	LOGD("W>R");
 	stored=buf->wptr-buf->rptr;
-	#if 0
-	availability=MIN(stored,get_size);
-	memcpy(output,buf->rptr,availability);
-	buf->rptr+=availability;
-	if(buf->rptr == (buf->data+buf->size)){
-		LOGD("read to end ,from the begin 2");
-		buf->rptr=buf->data;
-	}
-	buf->level-=availability;
-	return availability;
-	#else
 	goto OKOK;
-	#endif
   }
   if(buf->wptr < buf->rptr){
   	LOGD("W < R");
@@ -244,16 +191,8 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
 		/*ÒÑ¾­Ð´ÈëÁËIV´óÐ¡*/
 		memcpy(output+IV,buf->data,(availability-IV));
 	}
-	#if 0
-	buf->level-=availability;
-	if(buf->rptr == (buf->data+buf->size)){
-		LOGD("read to end ,from the begin 3");
-		buf->rptr=buf->data;
-	}
-	return availability;
-	#else
 	goto OK;
-	#endif
+
   }
 OKOK:
 	availability=MIN(stored,get_size);
