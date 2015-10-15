@@ -59,8 +59,16 @@ int cirbuf_empty(cirbuf_t *buf)
 }
 /*ÊÇ²»ÊÇÑ­»·»º³å²»´æÔÚÂúµÄÇé¿ö£¬¿ÉÒÔÖ±½Ó¸²¸ÇµÄå*/
 int cirbuf_full(cirbuf_t *buf){
+#if 0
 	if(buf->wptr + 1 == buf->rptr){
 		LOGD("cirbuf is full");
+		return 1;
+	}
+	return 0;
+	#endif
+	if(buf->level==buf->size)
+	{
+		LOGD("buff is full ");
 		return 1;
 	}
 	return 0;
@@ -165,15 +173,20 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
   }
   int availability=-1;
   int stored=-1;
-//  LOGD("do get");
+  LOGD("do get[%d]",get_size);
   if(buf->wptr == buf->rptr){/*²»Ò»¶¨ÊÇ¶¼µÈÓÚdata*/
 	//if(buf->level == buf->size)
 	//	LOGD("w == r should be full !");
+	LOGD("W==R");
 	stored=buf->level;
 	availability=MIN(stored,get_size);
 	memcpy(output,buf->rptr,availability);
 	buf->rptr+=availability;
 	buf->level-=availability;
+	if(buf->rptr == (buf->data+buf->size)){
+		LOGD("read to end ,from the begin 1 ");
+		buf->rptr=buf->data;
+	}
 	return availability;
   }
   if(buf->wptr > buf->rptr){
@@ -182,8 +195,8 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
 	availability=MIN(stored,get_size);
 	memcpy(output,buf->rptr,availability);
 	buf->rptr+=availability;
-	if(buf->rptr == buf->data+buf->size){
-		LOGD("read to end ,from the begin");
+	if(buf->rptr == (buf->data+buf->size)){
+		LOGD("read to end ,from the begin 2");
 		buf->rptr=buf->data;
 	}
 	buf->level-=availability;
@@ -210,6 +223,10 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
 		memcpy(output+IV,buf->data,(availability-IV));
 	}
 	buf->level-=availability;
+	if(buf->rptr == (buf->data+buf->size)){
+		LOGD("read to end ,from the begin 3");
+		buf->rptr=buf->data;
+	}
 	return availability;
   }
 }
@@ -222,7 +239,7 @@ int main(){
 	cirbuf_t *buf;
     cirbuf_init(&buf,10);
 	uint8_t *array="1234567890";
-
+    uint8_t *array2="abcdefghik";
 	/*Ğ´Èë1µ½0£¬¹²10¸ö*/
 	cirbuf_put(buf,array,10);
 	/*uint8_t ¾ÓÈ»Ö»Õ¼ÁËÒ»¸ö×Ö½Ú£¬ºÍcharÒ»Ñù*/
@@ -232,7 +249,7 @@ int main(){
 	for(i=0;i<10;i++)
 		printf("buf->data[%c] \n",*(buf->data+i));
 #if TEST_PUT
-	uint8_t *array2="abcdefghik";
+
 	/*´ËÊ±£¬Ó¦¸ÃÓÃarray2È«²¿¸²¸ÇÁËµ±Ç°»º³å£¬¼´Êä³öaµ½k*/
 	cirbuf_put(buf,array2,10);
 	LOGD("----2---AFTER PUT");
@@ -285,6 +302,22 @@ int main(){
 	LOGD("out[%s]",out);
 	cirbuf_get(buf, out, 4);
 	LOGD("out[%s]",out);
+	cirbuf_put(buf,array2,4);
+	LOGD("buf->data[%s]",buf->data);
+	cirbuf_put(buf,array2,4);
+	LOGD("buf->data[%s]",buf->data);
+	cirbuf_put(buf,array2,4);
+	LOGD("buf->data[%s]",buf->data);
+	cirbuf_put(buf,array,4);
+	LOGD("buf->data[%s]",buf->data);
+	cirbuf_get(buf, out, 4);
+	LOGD("out[%s]",out);
+	LOGD("get from buf->data[%s]",buf->data);
+	cirbuf_get(buf, out, 7);
+	LOGD("then out[%s]",out);
+	LOGD("get from buf->data[%s]",buf->data);
+	cirbuf_get(buf, out, 7);
+	LOGD("then out[%s]",out);
 	free(out);
 #endif
 
