@@ -81,17 +81,20 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 	int capability=-1;
 	if(buf->wptr < buf->rptr){
 		LOGD("W<R");
-		//int III=buf->rptr-buf->wptr;
-		/*r为data+7,w为data+4,表示4 5  6 可写入，从7可读取*/
-		rest=buf->rptr-buf->wptr;//-1;
+		rest=buf->rptr-buf->wptr;
 		capability=MIN(rest,put_size);
 		memcpy(buf->wptr,(uint8_t*)input,capability);
 		buf->wptr+=capability;
 		goto OK;
 	}
-	if(buf->data==buf->wptr && buf->data==buf->rptr){
+	/*这应该是我的bug，W==R不一定就是在开头处，满的的时候无法put，所以W==R肯定是空*/
+#if 0
+       if(buf->data==buf->wptr && buf->data==buf->rptr){
+#else
+        if(buf->wptr==buf->rptr){
+#endif
 		LOGD("buf->data == W == R ");
-		rest=buf->size;
+		rest=buf->size;/*空*/
 		capability=MIN(rest,put_size);
         memcpy(buf->wptr,(uint8_t*)input,put_size);
         buf->wptr=buf->data+capability;
@@ -105,16 +108,8 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 
     if(buf->wptr > buf->rptr){
 		LOGD("W>R");
-		/*：赋值时将指针赋给整数，未作类型转换 [默认启用]*/
-		/*
-		将一个指针转换为大小不同的整数 [-Wpointer-to-int-cast]
-		*/
-        #if 0 /*这是我的bug*/
-		rest=(int)(buf->data+buf->size-1)-(buf->wptr-buf->rptr);
-		#else
         rest=(buf->size)-(buf->wptr-buf->rptr);
-		#endif
-		LOGD("*(buf->wptr-1)[%c]",*(buf->wptr-1));
+		//LOGD("*(buf->wptr-1)[%c]",*(buf->wptr-1));
 		capability=MIN(rest,put_size);
 		int I=(buf->data+buf->size) - buf->wptr;
 		int II=0;
@@ -122,7 +117,7 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 		int check=capability-I;
 		/*因为插入要依赖于wptr，所以判断和插入是有先后顺序的，先插入I，移动wptr，
 		此时，I不够用，使用移动后的wptr插入II，再次移动wptr，准备下次插入*/
-		LOGD("put capacity[%d] to I [%d] *(buf->wptr)[%c] ",capability,I,*(buf->wptr) );
+		//LOGD("put capacity[%d] to I [%d] *(buf->wptr)[%c] ",capability,I,*(buf->wptr) );
 		memcpy(buf->wptr,input,capability);
 		buf->wptr+=capability;
 		LOGD("buf->wptr[%c] buf->wptr+1 [%c]",*buf->wptr,*(buf->wptr+1));
@@ -143,7 +138,7 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 			buf->wptr=buf->data+II;
 		}
 OK:
-	   buf->level+=capability;
+	    buf->level+=capability;
 		return capability;//(I+II);
 	}
 }
@@ -157,53 +152,28 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
   int availability=-1;
   int stored=-1;
   LOGD("do get[%d]",get_size);
-  #if 0 /*情况一*/
-  if(buf->wptr == buf->rptr){/*不一定是都等于data*/
-	LOGD("W==R");
-	stored=buf->level;
-	goto OKOK;
-  }
-  #endif
   if(buf->wptr > buf->rptr){
   	LOGD("W>R");
 	stored=buf->wptr-buf->rptr;
 	goto OKOK;
   }else
-  //if(buf->wptr < buf->rptr)
   {
   	LOGD("W < R or W==R");
-  	stored
-	#if 0
-	=(buf->data+buf->size-buf->rptr) + (buf->wptr-buf->data)
-	#else
-		  =buf->size-(buf->rptr-buf->wptr); /*就是情况一的level大小*/
-	#endif
+  	stored  =buf->size-(buf->rptr-buf->wptr);
 	availability=MIN(stored,get_size);
     int IV=buf->data+buf->size - buf->rptr;
 	int check=IV-availability;
 	memcpy(output,buf->rptr,availability);
 	buf->rptr+=availability;
-	#if 0
-	if(check>0 || check==0){/*表示W<R 或者W==R时，尾部空间够用*/
-      LOGD("just output IV");
-	   if(check=0){/*存在这么一种刚好够用的情况*/
-	   		LOGD("rtpr move to beginning");
-			buf->rptr=buf->data;
-	   }
-	}else /*IV不够*/
-	{
-		LOGD("output from V");
-		/*已经写入了IV大小*/
-		memcpy(output+IV,buf->data,(availability-IV));
-	}
-	#else
 	if(check<0){
 		LOGD("output from V");
 		/*已经写入了IV大小*/
 		memcpy(output+IV,buf->data,(availability-IV));
-	}else{
+	}
+    #if 0
+	else{
 		if(check==0){/*存在这么一种刚好够用的情况*/
-	   		LOGD("rtpr move to beginning");
+	   		LOGD("rptr move to beginning");
 			buf->rptr=buf->data;
 	   }
 	}
