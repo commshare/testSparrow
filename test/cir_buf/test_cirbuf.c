@@ -85,64 +85,29 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 		capability=MIN(rest,put_size);
 		memcpy(buf->wptr,(uint8_t*)input,capability);
 		buf->wptr+=capability;
-		goto OK;
 	}else
-#if 0
-	/*这应该是我的bug，W==R不一定就是在开头处，满的的时候无法put，所以W==R肯定是空*/
-#if 0
-       if(buf->data==buf->wptr && buf->data==buf->rptr){
-#else
-        if(buf->wptr==buf->rptr){
-#endif
-		LOGD("buf->data == W == R ");
-		rest=buf->size;/*空*/
-		capability=MIN(rest,put_size);
-        memcpy(buf->wptr,(uint8_t*)input,put_size);
-        buf->wptr=buf->data+capability;
-		LOGD("after move capacity[%d] step: *(buf->wptr)[%c] *(buf->wptr-1)[%c]",capability,*(buf->wptr),*(buf->wptr-1));
-        if(buf->wptr== (buf->data+buf->size)){/*表示已经写满*/
-			LOGD("W at the end,from the begin 1");
-			buf->wptr=buf->data;/*从0开始来了*/
-		}
-		goto OK;
-	}
-#endif
-  //  if(buf->wptr > buf->rptr)
-  {
+     {
 		LOGD("W>R or W==R");
         rest=(buf->size)-(buf->wptr-buf->rptr);
-		//LOGD("*(buf->wptr-1)[%c]",*(buf->wptr-1));
 		capability=MIN(rest,put_size);
 		int I=(buf->data+buf->size) - buf->wptr;
 		int II=0;
 		LOGD("rest[%d] capablity[%d] I[%d]",rest,capability,I);
 		int check=capability-I;
-		/*因为插入要依赖于wptr，所以判断和插入是有先后顺序的，先插入I，移动wptr，
-		此时，I不够用，使用移动后的wptr插入II，再次移动wptr，准备下次插入*/
-		//LOGD("put capacity[%d] to I [%d] *(buf->wptr)[%c] ",capability,I,*(buf->wptr) );
 		memcpy(buf->wptr,input,capability);
 		buf->wptr+=capability;
-		LOGD("buf->wptr[%c] buf->wptr+1 [%c]",*buf->wptr,*(buf->wptr+1));
-
-		if(check==0 || check<0)/*I够用*/
-		{
-           LOGD("only I is enough");
-		   if(check==0)
-		   	 buf->wptr=buf->data;
-		   goto OK;
-
-		}else
-		/*I不够用*/
-		{
-			LOGD("put II [%d]",II);
+		if(check==0)
+			buf->wptr=buf->data;
+		else
+		if(check>0){/*前端插入*/
 			II=capability-I;
 			memcpy(buf->data,input-I,II);
 			buf->wptr=buf->data+II;
 		}
+	}
 OK:
 	    buf->level+=capability;
-		return capability;//(I+II);
-	}
+		return capability;
 }
 
 int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
