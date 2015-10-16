@@ -30,6 +30,7 @@ int buf_reinit(sc_buf_t *buf){
 
 int buf_release(sc_buf_t * buf){
 	sc_lock(&buf->mutex);
+	/*看来主要就是维护由data指向首地址的一段size大小线性内存*/
 	if(buf->data)
 		free(buf->data);
 	buf->size=0;
@@ -67,15 +68,17 @@ int buf_level(sc_buf_t *buf){
 	return lev;
 }
 
-	//执行写入到out，并且返回最多只能写入多少
+	//执行写入到out，返回最多只能写入多少
+	/*从线性内存中获取数据，写入out，size代表写入out了多少字节*/
 int buf_get(sc_buf_t *buf,uint8_t *out,int size){
 	sc_lock(&buf->mutex);
 	int len=-1;
 	len=buf_empty(buf);
-	if(len == 1){
+	if(len == 1){//空
 		len=0;
-		goto EMPTY;//啥都没有
+		goto EMPTY;//返回len为0
 	}
+	/*不能超过能力范围内*/
 	len=MIN(buf->level,size);
 	if(buf->wr_ptr > buf->rd_ptr)
 	{

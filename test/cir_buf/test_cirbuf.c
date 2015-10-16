@@ -99,13 +99,12 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 		if(check==0)
 			buf->wptr=buf->data;
 		else
-		if(check>0){/*前端插入*/
-			II=capability-I;
+		if(check>0){/*继续在前端插入剩余元素*/
+			II=capability-I;/*剩余元素*/
 			memcpy(buf->data,input-I,II);
 			buf->wptr=buf->data+II;
 		}
 	}
-OK:
 	    buf->level+=capability;
 		return capability;
 }
@@ -122,7 +121,9 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
   if(buf->wptr > buf->rptr){
   	LOGD("W>R");
 	stored=buf->wptr-buf->rptr;
-	goto OKOK;
+	availability=MIN(stored,get_size);
+	memcpy(output,buf->rptr,availability);
+	buf->rptr+=availability;
   }else
   {
   	LOGD("W < R or W==R");
@@ -135,29 +136,23 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
 	if(check<0){
 		LOGD("output from V");
 		/*已经写入了IV大小*/
-		memcpy(output+IV,buf->data,(availability-IV));
-	}
-    #if 0
-	else{
-		if(check==0){/*存在这么一种刚好够用的情况*/
-	   		LOGD("rptr move to beginning");
+       int left_len=(availability-IV);
+		memcpy(output+IV,buf->data,left_len);
+		/*读指针从data开始处移动*/
+		buf->rptr=buf->data+left_len;
+	}else{
+		#if 0
+		if(buf->rptr == (buf->data+buf->size)){
+		   LOGD("read to end ,from the begin  ");
+		   buf->rptr=buf->data;
+	    }
+		#else
+		if(check==0)/*其他情况下，都不需要这么移动*/
 			buf->rptr=buf->data;
-	   }
+		#endif
 	}
-	#endif
-	goto OK;
-
   }
-OKOK:
-	availability=MIN(stored,get_size);
-	memcpy(output,buf->rptr,availability);
-	buf->rptr+=availability;
- OK:
 	buf->level-=availability;
-	if(buf->rptr == (buf->data+buf->size)){
-		LOGD("read to end ,from the begin  ");
-		buf->rptr=buf->data;
-	}
 	return availability;
 }
 
@@ -232,7 +227,7 @@ int main(){
 	LOGD("out[%s]",out);
 	cirbuf_get(buf, out, 4);
 	LOGD("out[%s]",out);
-	cirbuf_put(buf,array2,4);
+	cirbuf_put(buf,"###",3);
 	LOGD("buf->data[%s]",buf->data);
 	cirbuf_put(buf,array,4);
 	LOGD("buf->data[%s]",buf->data);
@@ -246,8 +241,8 @@ int main(){
 	cirbuf_get(buf, out, 7);
 	LOGD("then out[%s]",out);
 	LOGD("get from buf->data[%s]",buf->data);
-	cirbuf_get(buf, out, 7);
-	LOGD("then out[%s]",out);
+	if(cirbuf_get(buf, out, 7)!=-1)
+		LOGD("then out[%s]",out);
 	free(out);
 #endif
 
