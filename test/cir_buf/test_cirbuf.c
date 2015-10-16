@@ -43,7 +43,8 @@ int cirbuf_init(cirbuf_t **buf,int max){
 }
 /*如果是基本数据，拷贝的是数据的值，如果是指针，拷贝的是实参的值（值是一个地址）。*/
 void cirbuf_unint(cirbuf_t *buf){
-    free(buf->data);
+    if(buf->data)
+	    free(buf->data);
 	buf->data=buf->rptr=buf->wptr=NULL;
     /*释放这个地址指向的内存*/
     free(buf);
@@ -156,32 +157,36 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
   int availability=-1;
   int stored=-1;
   LOGD("do get[%d]",get_size);
+  #if 0 /*情况一*/
   if(buf->wptr == buf->rptr){/*不一定是都等于data*/
 	LOGD("W==R");
 	stored=buf->level;
 	goto OKOK;
   }
+  #endif
   if(buf->wptr > buf->rptr){
   	LOGD("W>R");
 	stored=buf->wptr-buf->rptr;
 	goto OKOK;
-  }
-  if(buf->wptr < buf->rptr){
-  	LOGD("W < R");
+  }else
+  //if(buf->wptr < buf->rptr)
+  {
+  	LOGD("W < R or W==R");
   	stored
 	#if 0
 	=(buf->data+buf->size-buf->rptr) + (buf->wptr-buf->data)
 	#else
-		  =buf->size-(buf->rptr-buf->wptr);
+		  =buf->size-(buf->rptr-buf->wptr); /*就是情况一的level大小*/
 	#endif
 	availability=MIN(stored,get_size);
     int IV=buf->data+buf->size - buf->rptr;
 	int check=IV-availability;
 	memcpy(output,buf->rptr,availability);
 	buf->rptr+=availability;
-	if(check>0 || check==0){
+	#if 0
+	if(check>0 || check==0){/*表示W<R 或者W==R时，尾部空间够用*/
       LOGD("just output IV");
-	   if(check=0){
+	   if(check=0){/*存在这么一种刚好够用的情况*/
 	   		LOGD("rtpr move to beginning");
 			buf->rptr=buf->data;
 	   }
@@ -191,6 +196,18 @@ int cirbuf_get(cirbuf_t *buf,void *output,int get_size){
 		/*已经写入了IV大小*/
 		memcpy(output+IV,buf->data,(availability-IV));
 	}
+	#else
+	if(check<0){
+		LOGD("output from V");
+		/*已经写入了IV大小*/
+		memcpy(output+IV,buf->data,(availability-IV));
+	}else{
+		if(check==0){/*存在这么一种刚好够用的情况*/
+	   		LOGD("rtpr move to beginning");
+			buf->rptr=buf->data;
+	   }
+	}
+	#endif
 	goto OK;
 
   }
