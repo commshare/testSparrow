@@ -86,7 +86,8 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 		memcpy(buf->wptr,(uint8_t*)input,capability);
 		buf->wptr+=capability;
 		goto OK;
-	}
+	}else
+#if 0
 	/*这应该是我的bug，W==R不一定就是在开头处，满的的时候无法put，所以W==R肯定是空*/
 #if 0
        if(buf->data==buf->wptr && buf->data==buf->rptr){
@@ -105,9 +106,10 @@ int cirbuf_put (cirbuf_t *buf,void *input,int put_size){
 		}
 		goto OK;
 	}
-
-    if(buf->wptr > buf->rptr){
-		LOGD("W>R");
+#endif
+  //  if(buf->wptr > buf->rptr)
+  {
+		LOGD("W>R or W==R");
         rest=(buf->size)-(buf->wptr-buf->rptr);
 		//LOGD("*(buf->wptr-1)[%c]",*(buf->wptr-1));
 		capability=MIN(rest,put_size);
@@ -267,13 +269,13 @@ int main(){
 	LOGD("out[%s]",out);
 	cirbuf_put(buf,array2,4);
 	LOGD("buf->data[%s]",buf->data);
-	cirbuf_put(buf,array2,4);
-	LOGD("buf->data[%s]",buf->data);
-	cirbuf_put(buf,array2,4);
-	LOGD("buf->data[%s]",buf->data);
 	cirbuf_put(buf,array,4);
 	LOGD("buf->data[%s]",buf->data);
-	cirbuf_get(buf, out, 4);
+	cirbuf_put(buf,array2,5);
+	LOGD("buf->data[%s]",buf->data);
+	cirbuf_put(buf,array,3);
+	LOGD("buf->data[%s]",buf->data);
+	cirbuf_get(buf, out, 8);
 	LOGD("out[%s]",out);
 	LOGD("get from buf->data[%s]",buf->data);
 	cirbuf_get(buf, out, 7);
