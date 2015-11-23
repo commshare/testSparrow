@@ -1,0 +1,295 @@
+11-23 09:25:30.649: V/SettingsInterface(15101): invalidate [system]: current 244 != cached 0
+11-23 09:25:30.651: D/ActivityThread(15101): hoder:android.app.IActivityManager$ContentProviderHolder@e3523b3,provider,holder.Provider:android.content.ContentProviderProxy@cf2ed70
+11-23 09:25:30.662: D/Proxy(15101): setHttpRequestCheckHandler
+11-23 09:25:30.668: D/ActivityThread(15101): BIND_APPLICATION handled : 0 / AppBindData{appInfo=ApplicationInfo{26f1709c sc.ffbitmap}}
+11-23 09:25:30.668: V/ActivityThread(15101): Handling launch of ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:25:30.692: V/ActivityThread(15101): ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}: app=android.app.Application@1ef2fa88, appName=sc.ffbitmap, pkg=sc.ffbitmap, comp={sc.ffbitmap/sc.ffbitmap.MainActivity}, dir=/data/app/sc.ffbitmap-2/base.apk
+11-23 09:25:30.727: D/AccessibilityManager(15101): setStateLocked: wasEnabled = false, mIsEnabled = false, wasTouchExplorationEnabled = false, mIsTouchExplorationEnabled = false, wasHighTextContrastEnabled = false, mIsHighTextContrastEnabled = false
+11-23 09:25:30.727: D/AccessibilityManager(15101): java.lang.Throwable: setStateLocked
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.view.accessibility.AccessibilityManager.setStateLocked(AccessibilityManager.java:553)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.view.accessibility.AccessibilityManager.tryConnectToServiceLocked(AccessibilityManager.java:636)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.view.accessibility.AccessibilityManager.<init>(AccessibilityManager.java:226)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.view.accessibility.AccessibilityManager.getInstance(AccessibilityManager.java:206)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.view.View.setFlags(View.java:9941)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.view.ViewGroup.initViewGroup(ViewGroup.java:536)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.view.ViewGroup.<init>(ViewGroup.java:525)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.view.ViewGroup.<init>(ViewGroup.java:520)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.view.ViewGroup.<init>(ViewGroup.java:516)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.view.ViewGroup.<init>(ViewGroup.java:512)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.widget.FrameLayout.<init>(FrameLayout.java:119)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at com.android.internal.policy.impl.PhoneWindow$DecorView.<init>(PhoneWindow.java:2346)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at com.android.internal.policy.impl.PhoneWindow.generateDecor(PhoneWindow.java:3643)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at com.android.internal.policy.impl.PhoneWindow.installDecor(PhoneWindow.java:4036)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at com.android.internal.policy.impl.PhoneWindow.getDecorView(PhoneWindow.java:2057)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.support.v7.app.AppCompatDelegateImplV7.onCreate(AppCompatDelegateImplV7.java:148)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.support.v7.app.AppCompatActivity.onCreate(AppCompatActivity.java:59)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at sc.ffbitmap.MainActivity.onCreate(MainActivity.java:24)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.app.Activity.performCreate(Activity.java:6142)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1115)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2528)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2656)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.app.ActivityThread.access$800(ActivityThread.java:178)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1512)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.os.Handler.dispatchMessage(Handler.java:111)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.os.Looper.loop(Looper.java:194)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at android.app.ActivityThread.main(ActivityThread.java:5691)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at java.lang.reflect.Method.invoke(Native Method)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at java.lang.reflect.Method.invoke(Method.java:372)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:959)
+11-23 09:25:30.727: D/AccessibilityManager(15101): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:754)
+11-23 09:25:30.839: D/Environment(15101): getStorageVolume,  volume:StorageVolume:
+11-23 09:25:30.839: D/Environment(15101):     mStorageId=65537 mPath=/storage/emulated/0 mDescriptionId=17040810 
+11-23 09:25:30.839: D/Environment(15101):     mPrimary=true mRemovable=false mEmulated=true mMtpReserveSpace=10 
+11-23 09:25:30.839: D/Environment(15101):     mAllowMassStorage=false mMaxFileSize=0 mOwner=UserHandle{0} mUuid=null 
+11-23 09:25:30.839: D/Environment(15101):     mUserLabel=null mState=mounted 
+11-23 09:25:30.839: D/Environment(15101): getStorageVolume,  volume:StorageVolume:
+11-23 09:25:30.839: D/Environment(15101):     mStorageId=131073 mPath=/storage/sdcard1 mDescriptionId=17040808 
+11-23 09:25:30.839: D/Environment(15101):     mPrimary=false mRemovable=true mEmulated=false mMtpReserveSpace=0 
+11-23 09:25:30.839: D/Environment(15101):     mAllowMassStorage=true mMaxFileSize=0 mOwner=null mUuid=null 
+11-23 09:25:30.839: D/Environment(15101):     mUserLabel=null mState=removed 
+11-23 09:25:30.839: D/Environment(15101): getStorageVolume,  volume:StorageVolume:
+11-23 09:25:30.839: D/Environment(15101):     mStorageId=196609 mPath=/storage/usbotg mDescriptionId=17040811 
+11-23 09:25:30.839: D/Environment(15101):     mPrimary=false mRemovable=true mEmulated=false mMtpReserveSpace=0 
+11-23 09:25:30.839: D/Environment(15101):     mAllowMassStorage=false mMaxFileSize=0 mOwner=null mUuid=null 
+11-23 09:25:30.839: D/Environment(15101):     mUserLabel=null mState=removed 
+11-23 09:25:30.840: D/ffbitmap(15101): sd path[/storage/emulated/0]
+11-23 09:25:30.842: V/ActivityThread(15101): Performing resume of ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:25:30.842: V/SettingsInterface(15101): get setting for user -3 by user 0 so skipping cache
+11-23 09:25:30.843: I/SettingsInterface(15101): call-query of user -3 by 0 so not updating cache
+11-23 09:25:30.845: D/ActivityThread(15101): ACT-AM_ON_RESUME_CALLED ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:25:30.845: V/ActivityThread(15101): Resume ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}} started activity: false, hideForNow: false, finished: false
+11-23 09:25:30.847: V/PhoneWindow(15101): DecorView setVisiblity: visibility = 4 ,Parent =null, this =com.android.internal.policy.impl.PhoneWindow$DecorView{2fa4c21 I.E..... R.....ID 0,0-0,0}
+11-23 09:25:30.867: D/OpenGLRenderer(15101): initialize DisplayEventReceiver 0xefc301d0
+11-23 09:25:30.867: D/OpenGLRenderer(15101): Use EGL_SWAP_BEHAVIOR_PRESERVED: false
+11-23 09:25:30.868: D/ViewRootImpl(15101): hardware acceleration is enabled, this = ViewRoot{350f3b73 sc.ffbitmap/sc.ffbitmap.MainActivity,ident = 0}
+11-23 09:25:30.881: V/ActivityThread(15101): Resuming ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}} with isForward=true
+11-23 09:25:30.882: V/PhoneWindow(15101): DecorView setVisiblity: visibility = 0 ,Parent =ViewRoot{350f3b73 sc.ffbitmap/sc.ffbitmap.MainActivity,ident = 0}, this =com.android.internal.policy.impl.PhoneWindow$DecorView{2fa4c21 V.E..... R.....ID 0,0-0,0}
+11-23 09:25:30.883: V/ActivityThread(15101): Scheduling idle handler for ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:25:30.883: D/ActivityThread(15101): ACT-LAUNCH_ACTIVITY handled : 0 / ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:25:30.883: D/ActivityThread(15101): ACT-AM_ON_PAUSE_CALLED ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:25:30.888: D/ActivityThread(15101): ACT-PAUSE_ACTIVITY handled : 0 / android.os.BinderProxy@5591e7a
+11-23 09:25:30.953: D/OpenGLRenderer(15101): CanvasContext() 0xefc46480 initialize 0xf49b4e08
+11-23 09:25:30.955: D/STATUS_BAR_TINT(15101): inject makeVisible: auto status bar icon theme
+11-23 09:25:30.955: D/Activity(15101): translucentStatus = false
+11-23 09:25:30.955: D/STATUS_BAR_TINT(15101): inject makeVisible: status bar tint effect
+11-23 09:25:30.955: D/STATUS_BAR_TINT(15101): setupStatusBarTint
+11-23 09:25:30.955: D/STATUS_BAR_TINT(15101): show status bar tint: true
+11-23 09:25:30.956: D/STATUS_BAR_TINT(15101): getAutomaticColor
+11-23 09:25:30.956: D/STATUS_BAR_TINT(15101): get drawing cache - start
+11-23 09:25:30.971: D/STATUS_BAR_TINT(15101): get drawing cache - end
+11-23 09:25:30.971: D/STATUS_BAR_TINT(15101): has drawing cache
+11-23 09:25:30.971: D/STATUS_BAR_TINT(15101): getMainColorFromBitmap - start
+11-23 09:25:30.975: D/STATUS_BAR_TINT(15101): getMainColorFromBitmap - end
+11-23 09:25:30.975: D/STATUS_BAR_TINT(15101): automatic color: ff212121
+11-23 09:25:30.975: D/STATUS_BAR_TINT(15101): average color factor: 33
+11-23 09:25:30.976: V/ActivityThread(15101): Finishing stop of ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}: show=true win=com.android.internal.policy.impl.PhoneWindow@39981bcf
+11-23 09:25:30.976: D/ActivityThread(15101): ACT-STOP_ACTIVITY_SHOW handled : 0 / android.os.BinderProxy@5591e7a
+11-23 09:25:30.992: E/GED(15101): Failed to get GED Log Buf, err(0)
+11-23 09:25:30.992: I/OpenGLRenderer(15101): Initialized EGL, version 1.4
+11-23 09:25:30.992: D/MALI(15101): eglCreateContext:206: [MALI] eglCreateContext display 0xf4a96280, share context 0x0 here.
+11-23 09:25:31.031: W/MALI(15101): gles_context_new:222: [MALI]ctx init(phase:7) takes more than 20ms here. Elapse time(us): 31630
+11-23 09:25:31.038: D/MALI(15101): gles_context_new:248: Create GLES ctx 0xefd0c008 successfully
+11-23 09:25:31.038: D/MALI(15101): eglCreateContext:543: [MALI] eglCreateContext end. Created context 0xefcfa908 here.
+11-23 09:25:31.040: D/OpenGLRenderer(15101): TaskManager() 0xefca3848, cpu = 8, thread = 4
+11-23 09:25:31.041: D/OpenGLRenderer(15101): Enabling debug mode 0
+11-23 09:25:31.041: D/Surface(15101): Surface::connect(this=0xf49b4e00,api=1)
+11-23 09:25:31.042: D/mali_winsys(15101): new_window_surface returns 0x3000
+11-23 09:25:31.042: D/Surface(15101): Surface::allocateBuffers(this=0xf49b4e00)
+11-23 09:25:31.072: D/OpenGLRenderer(15101): [TaskMgr] Running thread hwuiTask1 (15139)
+11-23 09:25:31.073: D/OpenGLRenderer(15101): [TaskMgr] Running thread hwuiTask2 (15140)
+11-23 09:25:31.073: D/OpenGLRenderer(15101): [TaskMgr] Running thread hwuiTask3 (15141)
+11-23 09:25:31.099: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:31.109: D/GraphicBuffer(15101): register, handle(0xefc9a700) (w:1080 h:1920 s:1088 f:0x1 u:0x000b00)
+11-23 09:25:31.117: W/MALI(15101): glDrawArrays:714: [MALI] glDrawArrays takes more than 5ms here. Total elapse time(us): 17715
+11-23 09:25:40.373: D/OpenGLRenderer(15101): [TaskMgr] Running thread hwuiTask4 (15162)
+11-23 09:25:40.374: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:40.376: D/GraphicBuffer(15101): register, handle(0xefc9a8e0) (w:1080 h:1920 s:1088 f:0x1 u:0x000b00)
+11-23 09:25:41.197: V/ActivityThread(15101): Performing resume of ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:25:41.199: D/ActivityThread(15101): ACT-AM_ON_RESUME_CALLED ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:25:41.199: V/ActivityThread(15101): Resume ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}} started activity: false, hideForNow: false, finished: false
+11-23 09:25:41.199: V/ActivityThread(15101): Resuming ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}} with isForward=true
+11-23 09:25:41.200: V/ActivityThread(15101): Scheduling idle handler for ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:25:41.201: D/ActivityThread(15101): ACT-RESUME_ACTIVITY handled : 1 / android.os.BinderProxy@5591e7a
+11-23 09:25:41.220: D/STATUS_BAR_TINT(15101): inject makeVisible: auto status bar icon theme
+11-23 09:25:41.220: D/Activity(15101): translucentStatus = false
+11-23 09:25:41.220: D/STATUS_BAR_TINT(15101): inject makeVisible: status bar tint effect
+11-23 09:25:41.220: D/STATUS_BAR_TINT(15101): setupStatusBarTint
+11-23 09:25:41.220: D/STATUS_BAR_TINT(15101): show status bar tint: true
+11-23 09:25:41.221: D/STATUS_BAR_TINT(15101): getAutomaticColor
+11-23 09:25:41.221: D/STATUS_BAR_TINT(15101): get drawing cache - start
+11-23 09:25:41.192: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:41.198: V/SettingsInterface(15101): get setting for user -3 by user 0 so skipping cache
+11-23 09:25:41.199: I/SettingsInterface(15101): call-query of user -3 by 0 so not updating cache
+11-23 09:25:41.199: V/SettingsInterface(15101):  from settings cache , name = mz_status_bar_tint , value = 1
+11-23 09:25:41.200: V/PhoneWindow(15101): DecorView setVisiblity: visibility = 0 ,Parent =ViewRoot{350f3b73 sc.ffbitmap/sc.ffbitmap.MainActivity,ident = 0}, this =com.android.internal.policy.impl.PhoneWindow$DecorView{2fa4c21 V.E..... R.....ID 0,0-1080,1920}
+11-23 09:25:41.201: D/GraphicBuffer(15101): register, handle(0xefc9a980) (w:1080 h:1920 s:1088 f:0x1 u:0x000b00)
+11-23 09:25:41.202: W/MALI(15101): glDrawArrays:714: [MALI] glDrawArrays takes more than 5ms here. Total elapse time(us): 9922
+11-23 09:25:41.275: D/STATUS_BAR_TINT(15101): get drawing cache - end
+11-23 09:25:41.275: D/STATUS_BAR_TINT(15101): has drawing cache
+11-23 09:25:41.275: D/STATUS_BAR_TINT(15101): getMainColorFromBitmap - start
+11-23 09:25:41.278: D/STATUS_BAR_TINT(15101): getMainColorFromBitmap - end
+11-23 09:25:41.278: D/STATUS_BAR_TINT(15101): automatic color: ff212121
+11-23 09:25:41.279: D/STATUS_BAR_TINT(15101): average color factor: 33
+11-23 09:25:41.221: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:41.229: D/GraphicBuffer(15101): register, handle(0xefc9aac0) (w:1080 h:1920 s:1088 f:0x1 u:0x000b00)
+11-23 09:25:41.230: W/MALI(15101): glDrawArrays:714: [MALI] glDrawArrays takes more than 5ms here. Total elapse time(us): 8875
+11-23 09:25:41.279: V/InputMethodManager(15101): onWindowFocus: null softInputMode=288 first=true flags=#81810100
+11-23 09:25:41.291: V/InputMethodManager(15101): START INPUT: com.android.internal.policy.impl.PhoneWindow$DecorView{2fa4c21 V.E..... R.....ID 0,0-1080,1920} ic=null tba=android.view.inputmethod.EditorInfo@1bd6d192 controlFlags=#104
+11-23 09:25:41.307: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.357: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.375: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.393: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.411: E/FFMPEGSample(15101): Registered formats
+11-23 09:25:42.435: E/FFMPEGSample(15101):  open file
+11-23 09:25:42.435: E/FFMPEGSample(15101): Opened file OK
+11-23 09:25:42.481: I/FFMPEGSample(15101): Video stream is [0]
+11-23 09:25:42.508: I/FFMPEGSample(15101): Video size is [480 x 360]
+11-23 09:25:42.517: E/FFMPEGSample(15101): Checked on the bitmap
+11-23 09:25:42.517: E/FFMPEGSample(15101): Grabbed the pixels
+11-23 09:25:42.517: E/FFMPEGSample(15101): read one frame
+11-23 09:25:42.517: E/FFMPEGSample(15101): read one frame
+11-23 09:25:42.519: E/FFMPEGSample(15101): read one frame
+11-23 09:25:42.521: E/FFMPEGSample(15101): read one frame
+11-23 09:25:42.521: E/FFMPEGSample(15101): read one frame
+11-23 09:25:42.521: E/FFMPEGSample(15101): read one frame
+11-23 09:25:42.521: E/FFMPEGSample(15101): read one frame
+11-23 09:25:42.531: E/FFMPEGSample(15101): packet pts 3
+11-23 09:25:42.556: I/Choreographer(15101): Skipped 8 frames!  The application may be doing too much work on its main thread.
+11-23 09:25:42.598: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.608: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.617: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.633: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.651: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.672: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.689: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.706: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.723: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.741: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.758: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.775: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.792: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.810: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.827: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.844: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.862: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.879: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.896: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.913: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.930: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:25:42.945: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:27:42.427: V/InputMethodManager(15101): START INPUT: com.android.internal.policy.impl.PhoneWindow$DecorView{2fa4c21 V.E..... R....... 0,0-1080,1920} ic=null tba=android.view.inputmethod.EditorInfo@2d9d96bf controlFlags=#100
+11-23 09:27:43.131: D/ActivityThread(15101): ACT-AM_ON_PAUSE_CALLED ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:27:43.160: D/ActivityThread(15101): ACT-PAUSE_ACTIVITY handled : 0 / android.os.BinderProxy@5591e7a
+11-23 09:27:43.162: V/ActivityThread(15101): Finishing stop of ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}: show=true win=com.android.internal.policy.impl.PhoneWindow@39981bcf
+11-23 09:27:43.162: D/ActivityThread(15101): ACT-STOP_ACTIVITY_SHOW handled : 0 / android.os.BinderProxy@5591e7a
+11-23 09:27:55.014: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:27:55.432: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:27:56.200: V/ActivityThread(15101): Performing resume of ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:27:56.201: D/ActivityThread(15101): ACT-AM_ON_RESUME_CALLED ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:27:56.202: V/ActivityThread(15101): Resume ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}} started activity: false, hideForNow: false, finished: false
+11-23 09:27:56.202: V/ActivityThread(15101): Resuming ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}} with isForward=true
+11-23 09:27:56.202: V/ActivityThread(15101): Scheduling idle handler for ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:27:56.203: D/ActivityThread(15101): ACT-RESUME_ACTIVITY handled : 1 / android.os.BinderProxy@5591e7a
+11-23 09:27:56.200: V/SettingsInterface(15101): get setting for user -3 by user 0 so skipping cache
+11-23 09:27:56.201: I/SettingsInterface(15101): call-query of user -3 by 0 so not updating cache
+11-23 09:27:56.202: V/SettingsInterface(15101):  from settings cache , name = mz_status_bar_tint , value = 1
+11-23 09:27:56.202: V/PhoneWindow(15101): DecorView setVisiblity: visibility = 0 ,Parent =ViewRoot{350f3b73 sc.ffbitmap/sc.ffbitmap.MainActivity,ident = 0}, this =com.android.internal.policy.impl.PhoneWindow$DecorView{2fa4c21 V.E..... R.....I. 0,0-1080,1920}
+11-23 09:27:56.203: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:27:56.223: D/STATUS_BAR_TINT(15101): inject makeVisible: auto status bar icon theme
+11-23 09:27:56.223: D/Activity(15101): translucentStatus = false
+11-23 09:27:56.223: D/STATUS_BAR_TINT(15101): inject makeVisible: status bar tint effect
+11-23 09:27:56.223: D/STATUS_BAR_TINT(15101): setupStatusBarTint
+11-23 09:27:56.223: D/STATUS_BAR_TINT(15101): show status bar tint: true
+11-23 09:27:56.224: D/STATUS_BAR_TINT(15101): getAutomaticColor
+11-23 09:27:56.224: D/STATUS_BAR_TINT(15101): get drawing cache - start
+11-23 09:27:56.208: W/MALI(15101): glDrawArrays:714: [MALI] glDrawArrays takes more than 5ms here. Total elapse time(us): 5127
+11-23 09:27:56.253: V/InputMethodManager(15101): onWindowFocus: null softInputMode=288 first=false flags=#81810100
+11-23 09:27:56.253: V/InputMethodManager(15101): START INPUT: com.android.internal.policy.impl.PhoneWindow$DecorView{2fa4c21 V.E..... R.....ID 0,0-1080,1920} ic=null tba=android.view.inputmethod.EditorInfo@6c1918c controlFlags=#100
+11-23 09:27:56.249: D/STATUS_BAR_TINT(15101): get drawing cache - end
+11-23 09:27:56.249: D/STATUS_BAR_TINT(15101): has drawing cache
+11-23 09:27:56.249: D/STATUS_BAR_TINT(15101): getMainColorFromBitmap - start
+11-23 09:27:56.252: D/STATUS_BAR_TINT(15101): getMainColorFromBitmap - end
+11-23 09:27:56.252: D/STATUS_BAR_TINT(15101): automatic color: ff212121
+11-23 09:27:56.253: D/STATUS_BAR_TINT(15101): average color factor: 33
+11-23 09:27:56.277: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:54.783: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:54.797: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:54.814: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:54.832: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:54.844: V/SettingsInterface(15101):  from settings cache , name = sound_effects_enabled , value = 0
+11-23 09:28:54.846: E/FFMPEGSample(15101): Checked on the bitmap
+11-23 09:28:54.846: E/FFMPEGSample(15101): Grabbed the pixels
+11-23 09:28:54.893: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:54.905: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:54.923: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:54.940: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:54.958: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:54.975: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:54.992: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.012: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.030: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.047: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.064: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.081: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.099: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.116: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.133: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.150: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.168: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.185: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.202: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.219: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.237: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:55.251: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:56.893: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:56.909: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:56.927: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:56.945: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:56.949: V/SettingsInterface(15101):  from settings cache , name = sound_effects_enabled , value = 0
+11-23 09:28:56.949: E/FFMPEGSample(15101): Checked on the bitmap
+11-23 09:28:56.949: E/FFMPEGSample(15101): Grabbed the pixels
+11-23 09:28:56.998: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.012: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.030: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.047: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.064: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.081: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.099: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.119: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.136: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.154: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.171: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.188: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.205: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.223: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.240: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.257: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.275: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.292: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.309: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.326: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.343: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:57.358: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:59.320: I/ViewRootImpl(15101): WindowInputEventReceiver onInputEvent!! KeyCode is 4, action is 0
+11-23 09:28:59.365: I/ViewRootImpl(15101): WindowInputEventReceiver onInputEvent!! KeyCode is 4, action is 1
+11-23 09:28:59.408: D/ActivityThread(15101): ACT-AM_ON_PAUSE_CALLED ActivityRecord{19c4aaa5 token=android.os.BinderProxy@5591e7a {sc.ffbitmap/sc.ffbitmap.MainActivity}}
+11-23 09:28:59.425: D/ActivityThread(15101): ACT-PAUSE_ACTIVITY_FINISHING handled : 0 / android.os.BinderProxy@5591e7a
+11-23 09:28:59.445: D/Surface(15101): Surface::setBuffersDimensions(this=0xf49b4e00,w=1080,h=1920)
+11-23 09:28:59.915: D/OpenGLRenderer(15101): Flushing caches (mode 0)
+11-23 09:28:59.916: D/Surface(15101): Surface::disconnect(this=0xf49b4e00,api=1)
+11-23 09:28:59.916: D/GraphicBuffer(15101): unregister, handle(0xefc9a700) (w:1080 h:1920 s:1088 f:0x1 u:0x000b00)
+11-23 09:28:59.918: D/GraphicBuffer(15101): unregister, handle(0xefc9a8e0) (w:1080 h:1920 s:1088 f:0x1 u:0x000b00)
+11-23 09:28:59.918: D/GraphicBuffer(15101): unregister, handle(0xefc9a980) (w:1080 h:1920 s:1088 f:0x1 u:0x000b00)
+11-23 09:28:59.919: D/GraphicBuffer(15101): unregister, handle(0xefc9aac0) (w:1080 h:1920 s:1088 f:0x1 u:0x000b00)
+11-23 09:28:59.924: D/OpenGLRenderer(15101): Flushing caches (mode 0)
+11-23 09:29:00.096: D/OpenGLRenderer(15101): Flushing caches (mode 1)
+11-23 09:29:00.096: D/OpenGLRenderer(15101): [TaskMgr] 0xefca3848 stop
+11-23 09:29:00.096: D/OpenGLRenderer(15101): [TaskMgr] Exit thread hwuiTask1 (15139)
+11-23 09:29:00.096: D/OpenGLRenderer(15101): [TaskMgr] Exit thread hwuiTask2 (15140)
+11-23 09:29:00.096: D/OpenGLRenderer(15101): [TaskMgr] Exit thread hwuiTask3 (15141)
+11-23 09:29:00.096: D/OpenGLRenderer(15101): [TaskMgr] Exit thread hwuiTask4 (15162)
+11-23 09:29:00.096: D/OpenGLRenderer(15101): PathCache::clear count = 0
+11-23 09:29:00.109: D/OpenGLRenderer(15101): Flushing caches (mode 0)
+11-23 09:29:00.109: D/OpenGLRenderer(15101): Flushing caches (mode 0)
+11-23 09:29:00.116: D/ActivityThread(15101): ACT-DESTROY_ACTIVITY handled : 1 / android.os.BinderProxy@5591e7a
+11-23 09:29:05.165: D/OpenGLRenderer(15101): Flushing caches (mode 0)
