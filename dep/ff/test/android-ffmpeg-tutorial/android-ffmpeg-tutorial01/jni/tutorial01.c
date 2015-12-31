@@ -31,7 +31,7 @@ void SaveFrame(JNIEnv *pEnv, jobject pObj, jobject pBitmap, int width, int heigh
 	char szFilename[200];
 	jmethodID sSaveFrameMID;
 	jclass mainActCls;
-	sprintf(szFilename, "/sdcard/android-ffmpeg-tutorial01/frame%d.jpg", iFrame);
+	sprintf(szFilename, "/mnt/sdcard/zhangbin/t1/frame%d.jpg", iFrame);
 	mainActCls = (*pEnv)->GetObjectClass(pEnv, pObj);
 	sSaveFrameMID = (*pEnv)->GetMethodID(pEnv, mainActCls, "saveFrameToPath", "(Landroid/graphics/Bitmap;Ljava/lang/String;)V");
 	LOGI("call java method to save frame %d", iFrame);

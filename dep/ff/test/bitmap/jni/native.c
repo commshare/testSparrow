@@ -141,7 +141,18 @@ void Java_sc_ffbitmap_MainActivity_openFile(JNIEnv * env, jobject this)
     avpicture_fill((AVPicture *)pFrameRGB, buffer, PIX_FMT_RGB24,
                             pCodecCtx->width, pCodecCtx->height);
 }
-
+void SaveFrame(JNIEnv *pEnv, jobject pObj, jobject pBitmap, int width, int height, int iFrame) {
+    char szFilename[200];
+    jmethodID sSaveFrameMID;
+    jclass mainActCls;
+    sprintf(szFilename, "/sdcard/android-ffmpeg-tutorial01/frame%d.jpg", iFrame);
+    mainActCls = (*pEnv)->GetObjectClass(pEnv, pObj);
+    sSaveFrameMID = (*pEnv)->GetMethodID(pEnv, mainActCls, "saveFrameToPath", "(Landroid/graphics/Bitmap;Ljava/lang/String;)V");
+    LOGI("call java method to save frame %d", iFrame);
+    jstring filePath = (*pEnv)->NewStringUTF(pEnv, szFilename);
+    (*pEnv)->CallVoidMethod(pEnv, pObj, sSaveFrameMID, pBitmap, filePath);
+    LOGI("call java method to save frame %d done", iFrame);
+}
 void Java_sc_ffbitmap_MainActivity_drawFrame(JNIEnv * env, jobject this, jstring bitmap)
 {
     AndroidBitmapInfo  info;
