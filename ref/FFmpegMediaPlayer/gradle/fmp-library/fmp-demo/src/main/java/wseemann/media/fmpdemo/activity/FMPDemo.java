@@ -59,7 +59,7 @@ public class FMPDemo extends FragmentActivity implements ServiceConnection {
 
 		final EditText uriText = (EditText) findViewById(R.id.uri);
     	// Uncomment for debugging
-    	//uriText.setText("http://...");
+    	uriText.setText("http://192.168.10.22:8888/LSS_WFU.mp3");
 
     	Intent intent = getIntent();
 
