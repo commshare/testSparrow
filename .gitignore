@@ -1,3 +1,7 @@
+###
+*.d
+out/
+####
 lib/
 build/
 ffmpeg-2.8/
