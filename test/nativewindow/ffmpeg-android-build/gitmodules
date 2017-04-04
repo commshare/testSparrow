@@ -1,0 +1,9 @@
+[submodule "x264"]
+	path = x264
+	url = http://git.videolan.org/git/x264.git
+[submodule "ffmpeg"]
+	path = ffmpeg
+	url = https://git.ffmpeg.org/ffmpeg.git
+[submodule "example/simplest_ffmpeg_streamer"]
+	path = example/simplest_ffmpeg_streamer
+	url = https://github.com/leixiaohua1020/simplest_ffmpeg_streamer.git
